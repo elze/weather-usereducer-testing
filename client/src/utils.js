@@ -1,5 +1,5 @@
 // utils.js
-export default {
+const utils = {
   getForecastInCurrentUnits: (forecast, tempUnit) => {
 	  //console.log(`^^^^^^^^^^^^^^ utils.getForecastInCurrentUnits ; forecast = ${JSON.stringify(forecast)} tempUnit = ${tempUnit} `);
 	if (tempUnit === "C") {
@@ -16,3 +16,5 @@ export default {
 	}		
   }
 };
+
+export default utils;
