@@ -9,6 +9,7 @@ jest.mock('axios');
 
 //let container = null;
 let tempConversionSpy;
+let axiosPutSpy;
 
 const fakeForecasts = 
 [
@@ -42,18 +43,21 @@ beforeEach(() => {
       return Promise.resolve({ data: fakeForecasts })
   });
   
+  axiosPutSpy = jest.spyOn(axios, 'put');
+  
 });
 
 afterEach(() => {
   tempConversionSpy.mockRestore();
   axios.get.mockRestore();  
+  axios.put.mockRestore();  
 });
 
 /*
-test('renders learn react link', () => {
+test('renders weather alert app', () => {
   render(<App />);
-  const linkElement = screen.getByText(/My Austin weather alert/i);
-  expect(linkElement).toBeInTheDocument();
+  const alertElement = screen.getByText(/My Austin weather alert/i);
+  expect(alertElement).toBeInTheDocument();
 });
 */
 
@@ -94,6 +98,8 @@ it('shows the temperature displayed in centigrade after C button is clicked',  a
   
   expect(screen.getByText('29')).toBeInTheDocument();
   expect(tempConversionSpy).toHaveBeenCalledWith(fakeForecasts[5], "C");
+  expect(axiosPutSpy).toHaveBeenCalledWith("/api/tempUnit", { temperatureUnit: "C" });
+
 });
 
 it('shows the temperature displayed in centigrade after getAllByRole', async () => {
@@ -113,6 +119,7 @@ it('shows the temperature displayed in centigrade after getAllByRole', async () 
     
   expect(screen.getByText('29')).toBeInTheDocument();
   expect(tempConversionSpy).toHaveBeenCalledWith(fakeForecasts[5], "C");
+  expect(axiosPutSpy).toHaveBeenCalledWith("/api/tempUnit", { temperatureUnit: "C" });
   
   const forecastInC = {...fakeForecasts[5], temperature: '29'};
 
@@ -124,4 +131,6 @@ it('shows the temperature displayed in centigrade after getAllByRole', async () 
     
   expect(screen.getByText('84')).toBeInTheDocument();
   expect(tempConversionSpy).toHaveBeenCalledWith(forecastInC, "F");
+  expect(axiosPutSpy).toHaveBeenCalledWith("/api/tempUnit", { temperatureUnit: "F" });
+  
 });

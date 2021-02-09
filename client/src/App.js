@@ -13,7 +13,9 @@ function reducer(state, action) {
   switch (action.type) {
 	  case 'setTemperatureUnit': 
 		if (action.unit !== state.temperatureUnit) {
-			return {forecast: utils.getForecastInCurrentUnits(state.forecast, action.unit), temperatureUnit: action.unit};
+			let newForecast = utils.getForecastInCurrentUnits(state.forecast, action.unit);
+			//return {forecast: utils.getForecastInCurrentUnits(state.forecast, action.unit), temperatureUnit: action.unit};
+			return {forecast: newForecast, temperatureUnit: action.unit};
 		}
 		return state;
 	  case 'setForecast': 	  
